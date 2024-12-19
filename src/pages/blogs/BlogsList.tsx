@@ -47,7 +47,7 @@ const BlogsList = () => {
       <Column title="Title (Geo)" dataIndex="title_ka" />
       <Column title="Description" dataIndex="description_en" />
       <Column title="Created At" dataIndex="formatted_create_date" />
-      <Column
+      {/* <Column
         title="Image"
         dataIndex="image_url"
         width={150}
@@ -63,7 +63,7 @@ const BlogsList = () => {
             }}
           />
         )}
-      />
+      /> */}
       <Column
         title="Actions"
         render={(_, row) => {
