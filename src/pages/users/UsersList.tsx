@@ -1,23 +1,62 @@
-import { useQuery } from "@tanstack/react-query";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
-import { getUsersForAdmin } from "../../supabase/admin/supabaseAdmin";
-
+import { getFormattedDate } from "../../utils/getFormattedDate";
+import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useGetUsersList } from "../../react-query/users-query";
 const UsersList = () => {
-  const { data } = useQuery({
-    queryKey: ["get-users-for-admin"],
-    queryFn: getUsersForAdmin,
-  });
-
+  const { usersListData, isLoading } = useGetUsersList();
+  const navigate = useNavigate();
+  const handleNavigateToUserEdit = (id: string) => {
+    navigate(`/admin/user/edit/${id}`);
+  };
+  const handleUserCreate = () => {
+    navigate("/admin/user/create");
+  };
   return (
     <Table
+      loading={isLoading}
       bordered
-      dataSource={data?.map((user) => ({ ...user, key: user.id }))}
+      className="w-full"
+      title={() => (
+        <Button
+          type="primary"
+          onClick={handleUserCreate}
+          icon={<PlusCircleOutlined />}
+        >
+          Create User
+        </Button>
+      )}
+      dataSource={usersListData?.map((user) => ({
+        ...user,
+        key: user.id,
+        formatted_create_date: getFormattedDate(user?.created_at),
+        formatted_last_sign_in_at: getFormattedDate(
+          user?.last_sign_in_at || ""
+        ),
+        id: user?.id,
+      }))}
     >
       <Column title="Email" dataIndex="email" />
-      <Column title="Created At" dataIndex="created_at" />
+      <Column title="Created At" dataIndex="formatted_create_date" />
       <Column title="Phone" dataIndex="phone" />
-      <Column title="Last Sign In" dataIndex="last_sign_in_at" />
+      <Column title="Last Sign In" dataIndex="formatted_last_sign_in_at" />
+      <Column
+        title="Actions"
+        render={(_, row) => {
+          return (
+            <div
+              className="space-x-1 cursor-pointer"
+              onClick={() => {
+                handleNavigateToUserEdit(row?.id);
+              }}
+            >
+              <EditOutlined className="cursor-pointer text-xl text-blue-500" />
+              <span className="text-blue-500">Edit</span>
+            </div>
+          );
+        }}
+      />
     </Table>
   );
 };

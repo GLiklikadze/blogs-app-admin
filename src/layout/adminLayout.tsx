@@ -1,47 +1,64 @@
+import {
+  ContainerOutlined,
+  PlusOutlined,
+  UnorderedListOutlined,
+  UserAddOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu, MenuProps, theme } from "antd";
-import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { getUsersForAdmin } from "../supabase/admin/supabaseAdmin";
+// import BlogsStats from "../components/BlogsStats";
+import { HeaderComponent } from "../components/Header";
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const items2: MenuProps["items"] = [
   {
     key: `users`,
     label: `Users`,
+    icon: <UserOutlined style={{ color: "#1677FF" }} />,
     children: [
       {
         key: 0,
-        label: <Link to="users">Users</Link>,
+        label: <Link to="user/list">Users List</Link>,
+        icon: <UnorderedListOutlined />,
+      },
+      {
+        key: 1,
+        label: <Link to="user/create">Create User</Link>,
+        icon: <UserAddOutlined />,
       },
     ],
   },
   {
     key: `blogs`,
     label: `Blogs`,
+    icon: <ContainerOutlined style={{ color: "#1677FF" }} />,
     children: [
       {
-        key: 1,
-        label: <Link to="blogs">blogs</Link>,
+        key: 2,
+        icon: <UnorderedListOutlined />,
+        label: <Link to="blogs/list">Blogs List</Link>,
+      },
+      {
+        key: 3,
+        icon: <PlusOutlined />,
+        label: <Link to="blogs/create">Add Blog</Link>,
       },
     ],
   },
 ];
 
-const AdminLayout = () => {
-  useEffect(() => {
-    getUsersForAdmin();
-  }, []);
-
+const AdminDashboardLayout = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  // const location = useLocation();
+  // const hasOutlet = location.pathname !== "/admin";
 
   return (
     <Layout>
-      <Header style={{ display: "flex", alignItems: "center" }}>
-        <div className="demo-logo" />
-      </Header>
+      <HeaderComponent />
       <Content style={{ padding: "0 48px" }}>
         <Layout
           style={{
@@ -59,7 +76,16 @@ const AdminLayout = () => {
               items={items2}
             />
           </Sider>
-          <Content style={{ padding: "0 24px", minHeight: "80vh" }}>
+          <Content
+            style={{
+              padding: "0 24px",
+              minHeight: "80vh",
+              display: "flex",
+              width: "100%",
+              margin: "0 auto",
+            }}
+          >
+            {/* {hasOutlet ? <Outlet /> : <BlogsStats />} */}
             <Outlet />
           </Content>
         </Layout>
@@ -68,4 +94,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default AdminDashboardLayout;

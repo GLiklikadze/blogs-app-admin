@@ -1,0 +1,49 @@
+import { useNavigate, useParams } from "react-router-dom";
+import { BlogsCreateUpdateFormSkeleton } from "./components/skeleton";
+import { Divider } from "antd";
+import { BlogsCreateUpdateForm } from "./components/createUpdateForm";
+import {
+  useGetSingleBlog,
+  useUpdateBlogs,
+} from "../../react-query/blogs-query";
+import { writeBlogFormValues } from "../../supabase/blogs/supabaseBlogs";
+
+export const BlogsEdit = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const { updateBlogMutate, updatedSuccess, updateError, isUpdateError } =
+    useUpdateBlogs();
+
+  const handleSubmit = (values: writeBlogFormValues) => {
+    if (updatedSuccess) {
+      navigate("/admin/blogs/list");
+    }
+    updateBlogMutate({ formValues: values, blogId: id ?? "" });
+  };
+
+  const { data: singleBlogData, isLoading } = useGetSingleBlog(id ?? "");
+
+  return (
+    <div className="ml-10 w-[36rem] bg-gray-100 p-8">
+      <h1 className="text-left mx-auto text-2xl font-bold">Edit Blog</h1>
+      <Divider
+        type="horizontal"
+        style={{ height: "1px", backgroundColor: "#1677FF" }}
+      />
+      {isLoading || !singleBlogData ? (
+        <BlogsCreateUpdateFormSkeleton />
+      ) : (
+        <BlogsCreateUpdateForm
+          singleBlogData={singleBlogData}
+          handleSubmit={handleSubmit}
+          error={updateError}
+          isError={isUpdateError}
+          isSuccess={updatedSuccess}
+        />
+      )}
+    </div>
+  );
+};
+
+export default BlogsEdit;
