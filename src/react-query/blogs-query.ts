@@ -1,5 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  InvalidateQueryFilters,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  deleteBlog,
   getBlogs,
   getSingleBlog,
   postBlogs,
@@ -60,4 +66,22 @@ export const useUpdateBlogs = () => {
     updateError,
     isPending,
   };
+};
+
+export const useDeleteBlog = () => {
+  const queryClient = useQueryClient();
+  const {
+    mutate: deleteMutate,
+    isError,
+    error,
+  } = useMutation({
+    mutationKey: ["delete-blog"],
+    mutationFn: deleteBlog,
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "get-blogs-for-admin",
+      ] as InvalidateQueryFilters);
+    },
+  });
+  return { deleteMutate, isError, error };
 };

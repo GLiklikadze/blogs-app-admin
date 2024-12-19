@@ -1,10 +1,14 @@
 import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { getFormattedDate } from "../../utils/getFormattedDate";
-import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-import { useGetBlogsList } from "../../react-query/blogs-query";
+import { useDeleteBlog, useGetBlogsList } from "../../react-query/blogs-query";
 
 const BlogsList = () => {
   const { blogsData, isLoading } = useGetBlogsList();
@@ -12,6 +16,7 @@ const BlogsList = () => {
   const handleNavigateToBlogEdit = (id: string) => {
     navigate(`/admin/blogs/edit/${id}`);
   };
+  const { deleteMutate } = useDeleteBlog();
 
   const handleUserCreate = () => {
     navigate("/admin/blogs/create");
@@ -68,14 +73,23 @@ const BlogsList = () => {
         title="Actions"
         render={(_, row) => {
           return (
-            <div
-              className="space-x-1 cursor-pointer"
-              onClick={() => {
-                handleNavigateToBlogEdit(row?.id);
-              }}
-            >
-              <EditOutlined className="cursor-pointer text-xl text-blue-500" />
-              <span className="text-blue-500">Edit</span>
+            <div className="flex flex-row gap-4">
+              <div
+                className="space-x-1 cursor-pointer"
+                onClick={() => {
+                  handleNavigateToBlogEdit(row?.id);
+                }}
+              >
+                <EditOutlined className="cursor-pointer text-xl text-blue-500" />
+                {/* <span className="text-blue-500">Edit</span> */}
+              </div>
+              <div
+                onClick={() => {
+                  deleteMutate(row?.id);
+                }}
+              >
+                <DeleteOutlined className="cursor-pointer text-red-500 text-xl" />
+              </div>
             </div>
           );
         }}

@@ -64,6 +64,21 @@ export const updateBlog = async ({
   }
 };
 
+export const deleteBlog = async (blogId: string) => {
+  try {
+    // Call Supabase to delete the blog post
+    const { data } = await supabase
+      .from("blogs")
+      .delete()
+      .eq("id", blogId)
+      .throwOnError();
+    return data;
+  } catch (error) {
+    console.error("Error deleting blog post:", error);
+    throw error;
+  }
+};
+
 export const postBlogs = async ({
   formValues,
   id,
