@@ -12,7 +12,7 @@ const initialLoginObj = {
   email: "",
   password: "",
 };
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const { mutateLogin, error, isError, isSuccess } = useLogin();
   const navigate = useNavigate();
   const handleSubmit = (fieldValues: LoginFormValues) => {

@@ -1,11 +1,8 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Route } from "react-router-dom";
 import { ADMIN_PATHS } from "../adminRoutes.enum";
 import { LoaderComponent } from "@/components/loader/LoaderComponent";
-
-const BlogsList = lazy(() => import("@/pages/blogs/BlogsList"));
-const BlogsEdit = lazy(() => import("@/pages/blogs/BlogsEdit"));
-const BlogsCreate = lazy(() => import("@/pages/blogs/BlogsCreate"));
+import { BlogsCreate, BlogsEdit, BlogsList } from "./blogsPagesLazyExport";
 
 export const BLOGS_ROUTES = [
   <Route
