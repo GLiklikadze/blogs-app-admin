@@ -6,6 +6,7 @@ const { Item } = Form;
 import { LoginFormValues } from "./LoginPage.types";
 import { useLogin } from "../../../react-query/auth-query";
 import { useNavigate } from "react-router-dom";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 const initialLoginObj = {
   email: "",
@@ -18,7 +19,7 @@ const LoginPage = () => {
     console.log(fieldValues);
     mutateLogin(fieldValues);
     if (isSuccess) {
-      navigate("admin");
+      navigate(ADMIN_PATHS.ADMIN);
     }
   };
   const [form] = useForm();

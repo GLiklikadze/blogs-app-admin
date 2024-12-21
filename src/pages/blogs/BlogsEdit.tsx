@@ -7,6 +7,7 @@ import {
   useUpdateBlogs,
 } from "../../react-query/blogs-query";
 import { writeBlogFormValues } from "../../supabase/blogs/supabaseBlogs";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 export const BlogsEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,10 +17,8 @@ export const BlogsEdit = () => {
     useUpdateBlogs();
 
   const handleSubmit = (values: writeBlogFormValues) => {
-    if (updatedSuccess) {
-      navigate("/admin/blogs/list");
-    }
     updateBlogMutate({ formValues: values, blogId: id ?? "" });
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_LIST}`);
   };
 
   const { data: singleBlogData, isLoading } = useGetSingleBlog(id ?? "");

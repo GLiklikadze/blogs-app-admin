@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { login, logout } from "../supabase/auth/supabaseAuth";
 import { useNavigate } from "react-router-dom";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const useLogin = () => {
   } = useMutation({
     mutationKey: ["login"],
     mutationFn: login,
-    onSuccess: () => navigate("/admin"),
+    onSuccess: () => navigate(`/${ADMIN_PATHS.ADMIN}`),
   });
   return { mutateLogin, isError, error, isSuccess };
 };

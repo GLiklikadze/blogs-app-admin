@@ -6,6 +6,7 @@ import {
 } from "../../react-query/users-query";
 import { UsersCreateUpdateFormSkeleton } from "./components/skeleton";
 import { Divider } from "antd";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 export const UsersEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +17,7 @@ export const UsersEdit = () => {
 
   const handleSubmit = (values: { email: string; phone: string }) => {
     mutateUser({ id: id ?? "", payload: values });
-    navigate("/admin/user/list");
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.USER_LIST}`);
   };
 
   const { data: singleUserData, isLoading } = useGetSingleUser(id as string);

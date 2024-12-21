@@ -64,7 +64,7 @@ export const BlogsCreateUpdateForm: React.FC<BlogsCreateUpdateFormProps> = ({
           {
             required: true,
             min: 2,
-            max: 25,
+            max: 400,
           },
         ]}
       >
@@ -77,7 +77,7 @@ export const BlogsCreateUpdateForm: React.FC<BlogsCreateUpdateFormProps> = ({
           {
             required: true,
             min: 2,
-            max: 25,
+            max: 400,
           },
         ]}
       >

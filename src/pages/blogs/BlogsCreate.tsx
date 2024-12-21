@@ -5,6 +5,7 @@ import { BlogsCreateUpdateForm } from "./components/createUpdateForm";
 import { usePostBlogs } from "../../react-query/blogs-query";
 import { useAuthContext } from "../../context/hooks/useAuthContext";
 import { writeBlogFormValues } from "./Blogs.types";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 export const BlogsCreate = () => {
   const { user } = useAuthContext();
@@ -19,9 +20,7 @@ export const BlogsCreate = () => {
 
   const handleSubmit = (values: writeBlogFormValues) => {
     createBlogMutate({ formValues: values, id: user?.id ?? "" });
-    if (createdSuccess) {
-      navigate("/admin/blogs/list");
-    }
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_LIST}`);
   };
   return (
     <div className="ml-10 w-[36rem] bg-gray-100 p-8">

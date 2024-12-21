@@ -9,6 +9,7 @@ import { Layout, Menu, MenuProps, theme } from "antd";
 import { Link, Outlet } from "react-router-dom";
 // import BlogsStats from "../components/BlogsStats";
 import { HeaderComponent } from "../components/Header";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 const { Content, Sider } = Layout;
 
@@ -20,12 +21,12 @@ const items2: MenuProps["items"] = [
     children: [
       {
         key: 0,
-        label: <Link to="user/list">Users List</Link>,
+        label: <Link to={ADMIN_PATHS.USER_LIST}>Users List</Link>,
         icon: <UnorderedListOutlined />,
       },
       {
         key: 1,
-        label: <Link to="user/create">Create User</Link>,
+        label: <Link to={ADMIN_PATHS.USER_CREATE}>Create User</Link>,
         icon: <UserAddOutlined />,
       },
     ],
@@ -38,12 +39,12 @@ const items2: MenuProps["items"] = [
       {
         key: 2,
         icon: <UnorderedListOutlined />,
-        label: <Link to="blogs/list">Blogs List</Link>,
+        label: <Link to={ADMIN_PATHS.BLOGS_LIST}>Blogs List</Link>,
       },
       {
         key: 3,
         icon: <PlusOutlined />,
-        label: <Link to="blogs/create">Add Blog</Link>,
+        label: <Link to={ADMIN_PATHS.BLOGS_CREATE}>Add Blog</Link>,
       },
     ],
   },

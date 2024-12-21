@@ -3,6 +3,7 @@ import { UsersCreateUpdateFormSkeleton } from "./components/skeleton";
 import { Divider } from "antd";
 import { useCreateUser } from "../../react-query/users-query";
 import { useNavigate } from "react-router-dom";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 export const UsersCreate = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const UsersCreate = () => {
     password: string;
   }) => {
     createUserMutate(payload);
-    navigate("/admin/user/list");
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.USER_LIST}`);
   };
 
   return (

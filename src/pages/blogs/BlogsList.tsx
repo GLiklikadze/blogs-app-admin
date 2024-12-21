@@ -9,17 +9,18 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { useDeleteBlog, useGetBlogsList } from "../../react-query/blogs-query";
+import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
 const BlogsList = () => {
   const { blogsData, isLoading } = useGetBlogsList();
   const navigate = useNavigate();
   const handleNavigateToBlogEdit = (id: string) => {
-    navigate(`/admin/blogs/edit/${id}`);
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_UPDATE}/${id}`);
   };
   const { deleteMutate } = useDeleteBlog();
 
   const handleUserCreate = () => {
-    navigate("/admin/blogs/create");
+    navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_CREATE}`);
   };
   console.log(blogsData);
   return (
