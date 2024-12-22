@@ -8,16 +8,18 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-import { useDeleteBlog, useGetBlogsList } from "../../react-query/blogs-query";
+import { useGetBlogsList } from "../../react-query/query/blogs/blogs-query";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
+import { blogsData } from "./Blogs.types";
+import { useDeleteBlog } from "@/react-query/mutation/blogs/blogs-mutation";
 
 const BlogsList = () => {
-  const { blogsData, isLoading } = useGetBlogsList();
+  const { data: blogsData, isLoading } = useGetBlogsList<blogsData[]>();
   const navigate = useNavigate();
   const handleNavigateToBlogEdit = (id: string) => {
     navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_UPDATE}/${id}`);
   };
-  const { deleteMutate } = useDeleteBlog();
+  const { mutate: deleteMutate } = useDeleteBlog();
 
   const handleUserCreate = () => {
     navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_CREATE}`);
@@ -37,7 +39,7 @@ const BlogsList = () => {
           Create Blog
         </Button>
       )}
-      dataSource={blogsData?.map((blog) => ({
+      dataSource={blogsData?.map((blog: blogsData) => ({
         ...blog,
         key: blog.id,
         formatted_create_date: getFormattedDate(blog?.created_at),

@@ -4,7 +4,7 @@ import { useForm } from "antd/es/form/Form";
 const { Item } = Form;
 
 import { LoginFormValues } from "./LoginPage.types";
-import { useLogin } from "../../../react-query/auth-query";
+import { useLogin } from "../../../react-query/mutation/auth/auth-query";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
 
@@ -13,7 +13,7 @@ const initialLoginObj = {
   password: "",
 };
 const LoginPage: React.FC = () => {
-  const { mutateLogin, error, isError, isSuccess } = useLogin();
+  const { mutate: mutateLogin, error, isError, isSuccess } = useLogin();
   const navigate = useNavigate();
   const handleSubmit = (fieldValues: LoginFormValues) => {
     console.log(fieldValues);

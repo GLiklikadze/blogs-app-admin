@@ -2,19 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { BlogsCreateUpdateFormSkeleton } from "./components/skeleton";
 import { Divider } from "antd";
 import { BlogsCreateUpdateForm } from "./components/createUpdateForm";
-import { usePostBlogs } from "../../react-query/blogs-query";
 import { useAuthContext } from "../../context/hooks/useAuthContext";
 import { writeBlogFormValues } from "./Blogs.types";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
+import { usePostBlogs } from "@/react-query/mutation/blogs/blogs-mutation";
 
 export const BlogsCreate = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const {
-    BlogCreateError,
-    createBlogMutate,
-    createdSuccess,
-    isBlogCreateError,
+    mutate: createBlogMutate,
+    isSuccess: createdSuccess,
+    isError: isBlogCreateError,
+    error: BlogCreateError,
     isPending,
   } = usePostBlogs();
 

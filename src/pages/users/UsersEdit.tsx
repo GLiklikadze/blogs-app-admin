@@ -1,17 +1,20 @@
 import { UserCreateUpdateForm } from "./components/createUpdateForm";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useGetSingleUser,
-  useUpdateSingleUser,
-} from "../../react-query/users-query";
+import { useGetSingleUser } from "../../react-query/query/users/users-query";
 import { UsersCreateUpdateFormSkeleton } from "./components/skeleton";
 import { Divider } from "antd";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
+import { useUpdateSingleUser } from "@/react-query/mutation/users/users-mutation";
 
 export const UsersEdit = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { mutateUser, error, isError, isSuccess } = useUpdateSingleUser();
+  const {
+    mutate: mutateUser,
+    error,
+    isError,
+    isSuccess,
+  } = useUpdateSingleUser();
 
   const navigate = useNavigate();
 

@@ -1,13 +1,13 @@
 import { PropertySafetyTwoTone, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Layout } from "antd";
 import { useAuthContext } from "../context/hooks/useAuthContext";
-import { useLogOut } from "../react-query/auth-query";
+import { useLogOut } from "../react-query/mutation/auth/auth-query";
 const { Header } = Layout;
 
 export const HeaderComponent = () => {
   const { user } = useAuthContext();
 
-  const { mutateLogOut } = useLogOut();
+  const { mutate: mutateLogOut } = useLogOut();
   const handleLogOut = () => {
     mutateLogOut();
   };

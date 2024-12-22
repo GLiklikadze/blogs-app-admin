@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import { supabase } from "../supabaseClient";
 
-export const getUsersForAdmin = async () => {
+export const getUsersForAdmin = async (): Promise<User[]> => {
   try {
     const { data, error } = await supabase.auth.admin.listUsers();
     if (error) {
@@ -14,14 +14,16 @@ export const getUsersForAdmin = async () => {
     throw err;
   }
 };
-
+type UserResponse = {
+  user: User;
+};
 export const updateUserByAdmin = async ({
   id,
   payload,
 }: {
   id: string;
   payload: { email: string; phone: string };
-}) => {
+}): Promise<UserResponse> => {
   console.log("update", id, payload);
   try {
     const { data, error } = await supabase.auth.admin.updateUserById(
@@ -39,7 +41,7 @@ export const updateUserByAdmin = async ({
   }
 };
 
-export const getSingleUserForAdmin = async (id: string) => {
+export const getSingleUserForAdmin = async (id: string): Promise<User> => {
   try {
     const { data, error } = await supabase.auth.admin.getUserById(id);
     if (error) {
@@ -56,7 +58,7 @@ export const createNewUser = async (payload: {
   email: string;
   password: string;
   phone: string;
-}) => {
+}): Promise<User> => {
   try {
     const { data, error } = await supabase.auth.admin.createUser(payload);
     if (error) {

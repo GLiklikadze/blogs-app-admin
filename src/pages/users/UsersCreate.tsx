@@ -1,14 +1,19 @@
 import { UserCreateUpdateForm } from "./components/createUpdateForm";
 import { UsersCreateUpdateFormSkeleton } from "./components/skeleton";
 import { Divider } from "antd";
-import { useCreateUser } from "../../react-query/users-query";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
+import { useCreateUser } from "@/react-query/mutation/users/users-mutation";
 
 export const UsersCreate = () => {
   const navigate = useNavigate();
-  const { createUserMutate, error, isError, isPending, isSuccess } =
-    useCreateUser();
+  const {
+    mutate: createUserMutate,
+    error,
+    isError,
+    isPending,
+    isSuccess,
+  } = useCreateUser();
 
   const handleSubmit = (payload: {
     email: string;

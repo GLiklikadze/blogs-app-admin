@@ -1,23 +1,26 @@
+import { blogsData } from "@/pages/blogs/Blogs.types";
 import { supabase } from "../supabaseClient";
 
-export const getBlogs = async () => {
+export const getBlogs = async (): Promise<blogsData[]> => {
   try {
     const { data } = await supabase.from("blogs").select("*").throwOnError();
-    return data;
+    return data || [];
   } catch (err) {
     console.error("Error during get blogs data:", err);
     throw err;
   }
 };
-export const getSingleBlog = async (id: string) => {
+export const getSingleBlog = async (id: string): Promise<blogsData> => {
   try {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("blogs")
       .select("*")
       .eq("id", id)
       .single()
       .throwOnError();
-
+    if (error) {
+      throw new Error(`Blog with ID ${id} not found`);
+    }
     return data;
   } catch (err) {
     console.error("Error during single blog data:", err);
@@ -38,7 +41,7 @@ export const updateBlog = async ({
 }: {
   formValues: writeBlogFormValues;
   blogId: string;
-}) => {
+}): Promise<null> => {
   console.log("Updating blog with ID:", blogId);
   try {
     const { data, error } = await supabase
@@ -48,12 +51,13 @@ export const updateBlog = async ({
         title_en: formValues.title_en,
         description_en: formValues.description_en,
         description_ka: formValues.description_ka,
+        image_url: null,
         // image_url: formValues.image_url,
       })
       .eq("id", blogId);
-
+    console.log(data);
     if (error) {
-      throw new Error(`Blog update failed: ${error.message}`);
+      throw new Error(`Blog update failed:`);
     }
 
     console.log("Updated blog:", data);
@@ -64,7 +68,7 @@ export const updateBlog = async ({
   }
 };
 
-export const deleteBlog = async (blogId: string) => {
+export const deleteBlog = async (blogId: string): Promise<blogsData | null> => {
   try {
     // Call Supabase to delete the blog post
     const { data } = await supabase
@@ -85,8 +89,7 @@ export const postBlogs = async ({
 }: {
   formValues: writeBlogFormValues;
   id: string;
-}) => {
-  console.log(formValues);
+}): Promise<blogsData | null> => {
   try {
     // const imageRes = await supabase.storage
     //   .from("blog_images")
@@ -105,13 +108,14 @@ export const postBlogs = async ({
       description_en: formValues.description_en,
       description_ka: formValues.description_ka,
       // image_url: imageRes.data?.fullPath,
+      image_url: null,
       user_id: id,
     });
-
     if (error) {
-      throw new Error(`Blog insertion failed: ${error.message}`);
+      throw new Error(`Blog insertion failed`);
     }
     console.log("Created blog", data);
+    return data;
   } catch (err) {
     console.error("Error during post blog:", err);
     throw err;

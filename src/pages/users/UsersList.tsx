@@ -3,10 +3,11 @@ import Column from "antd/es/table/Column";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useGetUsersList } from "../../react-query/users-query";
+import { useGetUsersList } from "../../react-query/query/users/users-query";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
+
 const UsersList = () => {
-  const { usersListData, isLoading } = useGetUsersList();
+  const { data: usersListData, isLoading } = useGetUsersList();
   const navigate = useNavigate();
   const handleNavigateToUserEdit = (id: string) => {
     navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.USER_UPDATE}/${id}`);
