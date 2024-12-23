@@ -11,14 +11,7 @@ import {
   updateUserByAdmin,
 } from "@/supabase/users/supabaseUsers";
 import { PostgrestError, User } from "@supabase/supabase-js";
-
-type UpdateUserPayload = {
-  email: string;
-  phone: string;
-};
-type UserResponse = {
-  user: User;
-};
+import { UpdateUserPayload, UserResponse } from "./users.types";
 
 export const useUpdateSingleUser = ({
   mutationOptions,

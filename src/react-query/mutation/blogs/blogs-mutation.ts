@@ -14,13 +14,7 @@ import { BLOGS_MUTATION_KEYS } from "./blogsMutationKeys.enum";
 import { blogsData } from "@/pages/blogs/Blogs.types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { BLOGS_QUERY_KEYS } from "@/react-query/query/blogs/blogsQueryKeys.enum";
-
-type writeBlogFormValues = {
-  title_ka: string | null;
-  title_en: string | null;
-  description_ka: string | null;
-  description_en: string | null;
-};
+import { writeBlogFormValues } from "./blogs.types";
 
 export const usePostBlogs = ({
   mutationOptions,

@@ -6,14 +6,11 @@ import {
 import { login, logout } from "../../../supabase/auth/supabaseAuth";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_PATHS } from "@/routes/admin-dashboard/adminRoutes.enum";
-import { PostgrestError, Session, User } from "@supabase/supabase-js";
+import { PostgrestError } from "@supabase/supabase-js";
 import { httpRegisterProps } from "@/supabase/auth/supabaseAuth.types";
 import { LOGIN_MUTATION_KEYS } from "./authMutationKeys.enum";
+import { LoginResult } from "./auth.types";
 
-type LoginResult = {
-  user: User;
-  session: Session;
-};
 export const useLogin = ({
   mutationOptions,
 }: {

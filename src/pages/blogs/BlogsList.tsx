@@ -14,7 +14,7 @@ import { blogsData } from "./Blogs.types";
 import { useDeleteBlog } from "@/react-query/mutation/blogs/blogs-mutation";
 
 const BlogsList = () => {
-  const { data: blogsData, isLoading } = useGetBlogsList<blogsData[]>();
+  const { data: blogsData, isLoading } = useGetBlogsList();
   const navigate = useNavigate();
   const handleNavigateToBlogEdit = (id: string) => {
     navigate(`/${ADMIN_PATHS.ADMIN}/${ADMIN_PATHS.BLOGS_UPDATE}/${id}`);
